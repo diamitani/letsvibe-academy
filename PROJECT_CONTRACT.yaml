@@ -1,0 +1,40 @@
+project:
+  id: letsvibeai-redesign-2026
+  title: LetsVibeAI Growth and Builder Workspace Redesign
+  status: planning
+  original_request: Redesign letsvibeai.com to generate income, grow a consistent subscriber base, become a pillar of education and excellence, and add a custom chat workspace and project sandbox.
+  objective: Create a sustainable AI-building academy with free learning, paid execution value, and safe project experimentation.
+  constraints:
+    - AWS-only infrastructure
+    - Preserve existing free core curriculum
+    - No secrets in prompts, logs, or artifacts
+    - Consequential actions require approval
+  exclusions:
+    - Unrestricted production infrastructure access for learners
+    - Unmetered paid compute
+knowledge:
+  existing_assets:
+    - six-module vibe-coding curriculum
+    - three free hands-on labs
+jobs:
+  user_jobs: []
+  system_jobs: []
+  build_jobs: []
+  operational_jobs: []
+prioritization:
+  method: NPAO
+  ranked_items: []
+  approval_gates:
+    - billing configuration
+    - public deployment
+    - third-party account connection
+execution:
+  runtime_mode: phased
+  skill: letsvibeai-learning-workspace-planner
+  memory_namespace: project/letsvibeai-redesign-2026
+verification:
+  acceptance_criteria:
+    - New learner can create a project brief after onboarding.
+    - Paid entitlement gates workspace resources and displays usage limits.
+    - Sandbox run is isolated, logged, bounded, and can be reset.
+    - Critical funnel and cost events are recorded.
