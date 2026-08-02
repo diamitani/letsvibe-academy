@@ -7,9 +7,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import Logo from "@/components/logo"
-import { Chrome, Mail, AlertCircle, CheckCircle2 } from "lucide-react"
+import { Mail, AlertCircle, CheckCircle2 } from "lucide-react"
 
 function SignUpContent() {
   const router = useRouter()
@@ -20,7 +19,6 @@ function SignUpContent() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
 
@@ -69,12 +67,6 @@ function SignUpContent() {
     }
   }
 
-  const handleGoogleSignUp = async () => {
-    setError(null)
-    setIsGoogleLoading(true)
-    await signIn("google", { callbackUrl })
-  }
-
   if (success) {
     return (
       <div className="container flex min-h-[calc(100vh-8rem)] items-center justify-center py-12">
@@ -111,22 +103,6 @@ function SignUpContent() {
               <p>{error}</p>
             </div>
           )}
-
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={handleGoogleSignUp}
-            disabled={isGoogleLoading}
-          >
-            <Chrome className="mr-2 h-4 w-4" />
-            {isGoogleLoading ? "Signing up..." : "Continue with Google"}
-          </Button>
-
-          <div className="flex items-center gap-2">
-            <Separator className="flex-1" />
-            <span className="text-xs text-muted-foreground">OR</span>
-            <Separator className="flex-1" />
-          </div>
 
           <form onSubmit={handleEmailSignUp} className="space-y-4">
             <div className="space-y-2">

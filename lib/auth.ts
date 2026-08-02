@@ -1,9 +1,7 @@
 import { getServerSession, NextAuthOptions } from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { SupabaseAdapter } from "@auth/supabase-adapter"
 import { createClient, SupabaseClient } from "@supabase/supabase-js"
-import bcrypt from "bcryptjs"
 
 // Lazy-initialized clients — avoids module-scope crash during Next.js build
 // when environment variables aren't set
@@ -49,17 +47,6 @@ export function getAuthOptions(): NextAuthOptions {
       secret: supabaseRoleKey,
     }),
     providers: [
-      GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        authorization: {
-          params: {
-            prompt: "select_account",
-            access_type: "offline",
-            response_type: "code",
-          },
-        },
-      }),
       CredentialsProvider({
         id: "email-signup",
         name: "Email Sign Up",
@@ -222,23 +209,7 @@ export function getAuthOptions(): NextAuthOptions {
         }
         return session
       },
-      async signIn({ user, account }) {
-        if (account?.provider === "google" && user.id) {
-          const admin = getSupabaseAdmin()
-          const { data: existing } = await admin
-            .from("subscriptions")
-            .select("id")
-            .eq("user_id", user.id)
-            .limit(1)
-
-          if (!existing || existing.length === 0) {
-            await admin.from("subscriptions").insert({
-              user_id: user.id,
-              plan_id: "00000000-0000-0000-0000-000000000001",
-              status: "active",
-            })
-          }
-        }
+      async signIn() {
         return true
       },
     },
@@ -263,7 +234,6 @@ export function getAuthOptions(): NextAuthOptions {
 
 /**
  * Get the current session in server components or API routes.
- * Replacement for `getServerSession(authOptions)`.
  */
 export async function getSession() {
   return getServerSession(getAuthOptions())
@@ -271,7 +241,5 @@ export async function getSession() {
 
 /**
  * Backward-compatible authOptions export for the NextAuth route handler.
- * The auth options are lazily initialized via the exported getAuthOptions function.
- * This constant exists only to satisfy import consumers at module scope.
  */
 export const authOptions = getAuthOptions as unknown as NextAuthOptions
