@@ -15,7 +15,7 @@ export default function NewsletterFeature() {
           <div className="rounded-full bg-primary/10 p-3">
             <Mail className="h-6 w-6 text-primary" />
           </div>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">LiveBuildAI Newsletter</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">LetsVibeAI Newsletter</h2>
           <p className="text-muted-foreground text-lg max-w-2xl">
             Stay updated with the latest AI trends, tools, and insights delivered straight to your inbox every day.
           </p>
@@ -43,7 +43,7 @@ export default function NewsletterFeature() {
           <div className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
             <Button size="lg" className="w-full" asChild>
               <Link
-                href="https://www.linkedin.com/newsletters/livebuildai-7301188906387968001/"
+                href="https://www.linkedin.com/newsletters/letsvibeai-7301188906387968001/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

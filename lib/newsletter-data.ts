@@ -10,7 +10,7 @@ export interface NewsletterArticle {
 export const newsletterArticles: NewsletterArticle[] = [
   {
     id: "1",
-    title: "LiveBuildAI Daily News - 5.19.25",
+    title: "LetsVibeAI Daily News - 5.19.25",
     date: "2025-05-19",
     description: "The latest daily roundup of AI news and developments from around the web.",
     url: "https://www.linkedin.com/pulse/livebuildai-daily-news-51925-patrick-diamitani-nhp2c",
@@ -27,7 +27,7 @@ export const newsletterArticles: NewsletterArticle[] = [
   },
   {
     id: "3",
-    title: "LiveBuildAI Weekly Update - May 5, 2025",
+    title: "LetsVibeAI Weekly Update - May 5, 2025",
     date: "2025-05-05",
     description: "A comprehensive weekly roundup of the most important AI developments and news from the past week.",
     url: "https://www.linkedin.com/pulse/livebuildai-weekly-update-may-5-2025-patrick-diamitani-c8lic",
@@ -44,7 +44,7 @@ export const newsletterArticles: NewsletterArticle[] = [
   },
   {
     id: "5",
-    title: "LiveBuildAI News Bulletin - 4.30.25",
+    title: "LetsVibeAI News Bulletin - 4.30.25",
     date: "2025-04-30",
     description: "The latest news bulletin covering important AI developments and announcements.",
     url: "https://www.linkedin.com/pulse/livebuildai-news-bulletin-43025-patrick-diamitani-2dbgc",

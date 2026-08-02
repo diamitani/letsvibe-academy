@@ -10,7 +10,7 @@ export default function NewsletterPage() {
     <div className="container py-12">
       <div className="flex flex-col gap-8">
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">LiveBuildAI Newsletter</h1>
+          <h1 className="text-4xl font-bold tracking-tight">LetsVibeAI Newsletter</h1>
           <p className="text-muted-foreground text-lg max-w-3xl">
             Stay updated with the latest AI trends, tools, and insights delivered straight to your inbox. Our curated
             newsletter brings you the most important developments in the AI world every day.
@@ -25,7 +25,7 @@ export default function NewsletterPage() {
           <CardContent>
             <Button className="w-full" asChild>
               <Link
-                href="https://www.linkedin.com/newsletters/livebuildai-7301188906387968001/"
+                href="https://www.linkedin.com/newsletters/letsvibeai-7301188906387968001/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -7,7 +7,7 @@ export default function Testimonials() {
     {
       id: 1,
       content:
-        "LiveBuildAI has been an invaluable resource for my AI learning journey. The curated tools and tutorials have helped me build my first AI-powered application.",
+        "LetsVibeAI has been an invaluable resource for my AI learning journey. The curated tools and tutorials have helped me build my first AI-powered application.",
       author: "Sarah Johnson",
       role: "Software Developer",
       avatar: "/placeholder.svg?height=40&width=40&query=woman with glasses",
@@ -15,7 +15,7 @@ export default function Testimonials() {
     {
       id: 2,
       content:
-        "As someone new to AI, I was overwhelmed by the amount of information out there. LiveBuildAI simplified everything with its beginner-friendly resources.",
+        "As someone new to AI, I was overwhelmed by the amount of information out there. LetsVibeAI simplified everything with its beginner-friendly resources.",
       author: "Michael Chen",
       role: "Data Scientist",
       avatar: "/placeholder.svg?height=40&width=40&query=asian man smiling",

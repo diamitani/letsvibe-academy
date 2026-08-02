@@ -11,10 +11,10 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Logo className="h-6 w-6" />
-              <span className="font-bold">LiveBuildAI</span>
+              <span className="font-bold">LetsVibeAI</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              A central hub for AI enthusiasts and beginner learners, offering curated resources, tools, and content.
+              The practical AI-building academy where learners turn ideas into tested, presentable projects.
             </p>
             <div className="flex space-x-3">
               <Button variant="ghost" size="icon" asChild>
@@ -99,7 +99,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 border-t pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} LiveBuildAI. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} LetsVibeAI. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -40,8 +40,7 @@ export default function Features() {
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Everything You Need to Master AI</h2>
         <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-          LiveBuildAI provides comprehensive resources to help you learn, build, and innovate with artificial
-          intelligence.
+          LetsVibeAI provides structured learning and a builder workspace to help you become proficient with AI tools and techniques.
         </p>
       </div>
 
