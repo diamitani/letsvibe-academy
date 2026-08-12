@@ -15,13 +15,13 @@ export default function PopularTools() {
         <div>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-2">Popular AI Tools</h2>
           <p className="text-muted-foreground text-lg">
-            Discover our featured custom GPTs to enhance your productivity and workflow.
+            Discover our featured custom GPTs — and explore 820+ tools in the full AI directory.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 mt-4 md:mt-0">
           <Button variant="outline" asChild>
-            <Link href="https://gptpataitools.vercel.app" target="_blank" rel="noopener noreferrer">
-              Additional Tools
+            <Link href="/tools">
+              AI Tool Directory
               <ExternalLink className="ml-2 h-4 w-4" />
             </Link>
           </Button>

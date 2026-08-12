@@ -8,6 +8,7 @@ export interface Tool {
   industry?: string
   featured: boolean
   setting?: string
+  source?: "directory" | "gpt-store"
 }
 
 // Complete data from the provided CSV file
