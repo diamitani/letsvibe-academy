@@ -1,5 +1,6 @@
 import Hero from "@/components/hero"
 import Features from "@/components/features"
+import HubSections from "@/components/hub-sections"
 import NewsletterFeature from "@/components/newsletter-feature"
 import LatestVideos from "@/components/latest-videos"
 import PopularTools from "@/components/popular-tools"
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-8 pb-10">
       <Hero />
+      <HubSections />
       <Features />
       <FeaturedArticle />
       <LatestVideos />

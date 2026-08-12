@@ -43,9 +43,19 @@ export default function Header() {
       active: pathname === "/",
     },
     {
+      href: "/courses",
+      label: "Learn",
+      active: pathname === "/courses" || pathname.startsWith("/courses/"),
+    },
+    {
       href: "/tools",
       label: "Tools",
       active: pathname === "/tools",
+    },
+    {
+      href: "/tutorials",
+      label: "Tutorials",
+      active: pathname === "/tutorials" || pathname.startsWith("/tutorials/"),
     },
     {
       href: "/videos",
@@ -54,8 +64,18 @@ export default function Header() {
     },
     {
       href: "/blog",
-      label: "AI Articles",
+      label: "Articles",
       active: pathname === "/blog" || pathname.startsWith("/blog/"),
+    },
+    {
+      href: "/resources",
+      label: "Resources",
+      active: pathname === "/resources",
+    },
+    {
+      href: "/dashboard",
+      label: "Workspace",
+      active: pathname === "/dashboard",
     },
     {
       href: "/newsletter",

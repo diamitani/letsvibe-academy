@@ -1,36 +1,49 @@
-"use client"
-
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { getArticleById } from "@/lib/article-data"
+import { notFound } from "next/navigation"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import SectionRenderer from "@/components/section-renderer"
+import { getBlogPostById, formatBlogDate } from "@/lib/blog-data"
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const router = useRouter()
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { id } = await params
+  const post = getBlogPostById(id)
 
-  useEffect(() => {
-    const article = getArticleById(params.id)
-
-    if (article) {
-      // Redirect to the external article URL
-      window.location.href = article.url
-    } else {
-      // If article not found, redirect to blog listing
-      router.push("/blog")
-    }
-  }, [params.id, router])
+  if (!post) {
+    notFound()
+  }
 
   return (
-    <div className="container py-12 flex justify-center items-center">
-      <div className="text-center">
-        <p className="text-lg">Redirecting to article...</p>
-        <div className="mt-4 animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+    <div className="container py-12 max-w-3xl">
+      <Button variant="ghost" size="sm" className="mb-6 -ml-2" asChild>
+        <Link href="/blog">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          All articles
+        </Link>
+      </Button>
+
+      <div className="space-y-4 mb-10">
+        <div className="flex items-center gap-3">
+          <Badge>{post.category}</Badge>
+          <span className="text-sm text-muted-foreground">{formatBlogDate(post.date)}</span>
+          <span className="text-sm text-muted-foreground">by {post.author}</span>
+        </div>
+        <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
+        {post.excerpt && <p className="text-lg text-muted-foreground">{post.excerpt}</p>}
       </div>
+
+      {post.sections && post.sections.length > 0 ? (
+        <SectionRenderer sections={post.sections} />
+      ) : (
+        <p className="text-muted-foreground">{post.content}</p>
+      )}
     </div>
   )
 }
