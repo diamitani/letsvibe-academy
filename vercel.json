@@ -1,0 +1,9 @@
+{
+  "buildCommand": "bash scripts/vercel-build.sh",
+  "crons": [
+    {
+      "path": "/api/cron/newsletter-daily",
+      "schedule": "0 14 * * *"
+    }
+  ]
+}

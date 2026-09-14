@@ -14,8 +14,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// content-library.js lives one level above app/
-const LIBRARY_PATH = path.resolve(__dirname, "..", "..", "content-library.js");
+// content-library.js: prefer app/ root (deploy), fall back to repo root (local dev)
+const LIBRARY_CANDIDATES = [
+  path.resolve(__dirname, "..", "content-library.js"),
+  path.resolve(__dirname, "..", "..", "content-library.js"),
+];
+const LIBRARY_PATH = LIBRARY_CANDIDATES.find((p) => fs.existsSync(p)) ?? LIBRARY_CANDIDATES[0];
 
 /** Load the legacy blob by evaluating it with a `window` stub (as the old site did). */
 export function loadLibrary(libraryPath = LIBRARY_PATH) {
