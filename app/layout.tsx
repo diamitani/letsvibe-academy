@@ -1,46 +1,36 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { SessionProvider } from "@/components/session-provider"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { SiteNav } from "@/components/site/SiteNav";
+import { SiteFooter } from "@/components/site/SiteFooter";
 
-const inter = Inter({ subsets: ["latin"] })
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "LetsVibeAI — The AI Building Academy",
+  title: "LetsVibeAI Academy — Learn to Build with AI",
   description:
-    "Turn your ideas into tested, presentable projects with structured lessons, an AI workspace, and safe project sandboxes.",
-  keywords: ["AI learning", "vibe coding", "AI projects", "learn AI", "build with AI", "AI academy"],
-  openGraph: {
-    title: "LetsVibeAI — The AI Building Academy",
-    description:
-      "Turn your ideas into tested, presentable projects with structured lessons, an AI workspace, and safe project sandboxes.",
-    type: "website",
-    siteName: "LetsVibeAI",
-  },
-}
+    "Learn to build with AI: guided courses, curated video tracks, hands-on labs, a deep library, and the best AI tools — all in one place.",
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <SessionProvider>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-          </ThemeProvider>
-        </SessionProvider>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col bg-white font-sans text-slate-900">
+        <SiteNav />
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
       </body>
     </html>
-  )
+  );
 }

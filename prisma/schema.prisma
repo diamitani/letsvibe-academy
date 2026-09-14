@@ -1,0 +1,238 @@
+// LetsVibeAI Academy v2 — data model
+// Auth: Supabase Auth. Prisma mirrors users by id (TEXT; holds the Supabase auth UUID).
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum LessonKind {
+  video
+  article
+  quiz
+  lab
+}
+
+enum CompanyRole {
+  admin
+  member
+}
+
+enum ResourceKind {
+  article
+  podcast
+  blog
+  course
+}
+
+enum IssueStatus {
+  draft
+  scheduled
+  sent
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  imageUrl    String?
+  category    String
+  level       String
+  isPublished Boolean  @default(false)
+  isFree      Boolean  @default(true)
+  createdBy   String?
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+
+  chapters       Chapter[]
+  enrollments    Enrollment[]
+  seatAssignments SeatAssignment[]
+  certificates   Certificate[]
+}
+
+model Chapter {
+  id           String   @id @default(cuid())
+  courseId     String
+  title        String
+  position     Int
+  isPublished  Boolean  @default(false)
+  isFreePreview Boolean @default(false)
+  createdAt    DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(6)
+
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  @@index([courseId, position])
+}
+
+model Lesson {
+  id          String     @id @default(cuid())
+  chapterId   String
+  title       String
+  kind        LessonKind
+  contentUrl  String?
+  bodyMd      String?    @db.Text
+  position    Int
+  durationMin Int?
+  createdAt   DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime   @updatedAt @db.Timestamptz(6)
+
+  chapter  Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  progress Progress[]
+
+  @@index([chapterId, position])
+}
+
+model VideoTrack {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+
+  videos TrackVideo[]
+}
+
+model TrackVideo {
+  id        String   @id @default(cuid())
+  trackId   String
+  youtubeId String
+  title     String
+  creator   String?
+  duration  String?
+  position  Int
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+
+  track VideoTrack @relation(fields: [trackId], references: [id], onDelete: Cascade)
+
+  @@index([trackId, position])
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  userId     String
+  courseId   String
+  enrolledAt DateTime @default(now()) @db.Timestamptz(6)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+}
+
+model Progress {
+  id          String    @id @default(cuid())
+  userId      String
+  lessonId    String
+  completedAt DateTime? @db.Timestamptz(6)
+  watchPct    Float     @default(0)
+  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(6)
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+
+  members         CompanyMember[]
+  seatAssignments SeatAssignment[]
+}
+
+model CompanyMember {
+  id        String      @id @default(cuid())
+  companyId String
+  userId    String
+  role      CompanyRole @default(member)
+  createdAt DateTime    @default(now()) @db.Timestamptz(6)
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, userId])
+  @@index([userId])
+}
+
+model SeatAssignment {
+  id         String   @id @default(cuid())
+  companyId  String
+  courseId   String
+  userId     String
+  assignedAt DateTime @default(now()) @db.Timestamptz(6)
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  course  Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, userId])
+  @@index([companyId])
+  @@index([userId])
+}
+
+model Certificate {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  code      String   @unique
+  issuedAt  DateTime @default(now()) @db.Timestamptz(6)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+}
+
+model Tool {
+  id          String   @id @default(cuid())
+  name        String
+  url         String
+  category    String
+  description String?
+  pricing     String?
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model Resource {
+  id          String       @id @default(cuid())
+  kind        ResourceKind
+  title       String
+  url         String
+  source      String?
+  description String?
+  createdAt   DateTime     @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime     @updatedAt @db.Timestamptz(6)
+}
+
+model Subscriber {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  source        String?
+  subscribedAt  DateTime  @default(now()) @db.Timestamptz(6)
+  unsubscribedAt DateTime? @db.Timestamptz(6)
+}
+
+model NewsletterIssue {
+  id           String      @id @default(cuid())
+  subject      String
+  bodyMd       String      @db.Text
+  status       IssueStatus @default(draft)
+  scheduledFor DateTime?   @db.Timestamptz(6)
+  sentAt       DateTime?   @db.Timestamptz(6)
+  createdAt    DateTime    @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime    @updatedAt @db.Timestamptz(6)
+}
