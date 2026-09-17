@@ -45,10 +45,12 @@ export function CourseBrowser({
   courses,
   categories,
   levels,
+  searchPlaceholder = "Search courses…",
 }: {
   courses: CourseSummary[];
   categories: string[];
   levels: string[];
+  searchPlaceholder?: string;
 }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string | null>(null);
@@ -71,8 +73,8 @@ export function CourseBrowser({
         <div className="max-w-md">
           <Input
             type="search"
-            placeholder="Search courses…"
-            aria-label="Search courses"
+            placeholder={searchPlaceholder}
+            aria-label={searchPlaceholder.replace(/…$/, "")}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />

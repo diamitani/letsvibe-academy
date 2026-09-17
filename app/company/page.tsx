@@ -18,7 +18,7 @@ import {
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Company admin — LetsVibeAI Academy" };
+export const metadata = { title: "Company admin — LVAI Academy" };
 
 function ProgressBar({ pct }: { pct: number }) {
   return (

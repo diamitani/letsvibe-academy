@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
+import { CopyLinkButton } from "./copy-link-button";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,10 @@ export default async function CertificatePage({
   });
   if (!certificate) notFound();
 
-  const shortId = certificate.userId.slice(0, 8).toUpperCase();
+  // Certificates don't store a display name (signup collects email only),
+  // so the recipient line uses the LVAI Graduate fallback until a
+  // display-name field lands on the certificate record.
+  const recipientName = "LVAI Graduate";
   const issuedDate = new Date(certificate.issuedAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -48,11 +52,11 @@ export default async function CertificatePage({
           Certificate of Completion
         </h1>
         <p className="mt-2 text-slate-600">
-          This certificate was issued to learner{" "}
-          <span className="font-mono font-semibold text-slate-900">{shortId}</span>{" "}
+          This certificate was issued to{" "}
+          <span className="font-semibold text-slate-900">{recipientName}</span>{" "}
           for completing
         </p>
-        <p className="mt-2 text-lg font-bold text-[#0B2545]">
+        <p className="mt-2 text-lg font-bold text-navy-900">
           {certificate.course.title}
         </p>
 
@@ -69,16 +73,19 @@ export default async function CertificatePage({
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-slate-500">Issued by</dt>
-            <dd className="font-semibold text-slate-900">LetsVibeAI Academy</dd>
+            <dd className="font-semibold text-slate-900">LVAI Academy</dd>
           </div>
         </dl>
 
-        <Link
-          href={`/courses/${certificate.course.slug}`}
-          className="mt-8 inline-block rounded-xl bg-[#0B2545] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#12325E]"
-        >
-          View course
-        </Link>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href={`/courses/${certificate.course.slug}`}
+            className="inline-block rounded-xl bg-navy-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-navy-800"
+          >
+            View course
+          </Link>
+          <CopyLinkButton />
+        </div>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const columns = [
@@ -5,7 +6,9 @@ const columns = [
     heading: "Learn",
     links: [
       { label: "Courses", href: "/courses" },
+      { label: "Guides", href: "/guides" },
       { label: "Tracks", href: "/tracks" },
+      { label: "Labs", href: "/labs" },
       { label: "Library", href: "/library" },
     ],
   },
@@ -20,8 +23,9 @@ const columns = [
   {
     heading: "Resources",
     links: [
+      { label: "Marketplace", href: "/marketplace" },
       { label: "Tools", href: "/tools" },
-      { label: "Newsletter", href: "/#newsletter" },
+      { label: "Newsletter", href: "/newsletter" },
     ],
   },
 ];
@@ -32,12 +36,13 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
-            <p className="text-lg font-extrabold tracking-tight text-navy-900">
-              LetsVibeAI
+            <p className="flex items-center gap-2.5 text-lg font-extrabold tracking-tight text-navy-900">
+              <Image src="/lvai-mark.svg" alt="" width={24} height={27} />
+              LVAI
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-slate-600">
               The academy for building with AI: guided courses, curated video
-              tracks, hands-on labs, a deep library, and the best AI tools — all
+              tracks, hands-on labs, a deep library, and the best AI tools, all
               in one place.
             </p>
           </div>
@@ -63,7 +68,7 @@ export function SiteFooter() {
         </div>
         <div className="mt-12 border-t border-slate-200 pt-6">
           <p className="text-sm text-slate-500">
-            © 2026 LetsVibeAI Academy
+            © 2026 LVAI Academy
           </p>
         </div>
       </div>

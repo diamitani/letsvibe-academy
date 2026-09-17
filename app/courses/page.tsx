@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { CtaBand } from "@/components/site/CtaBand";
 import { CourseBrowser } from "./course-browser";
 
 export const dynamic = "force-dynamic";
@@ -52,6 +53,7 @@ export default async function CoursesPage() {
             levels={levels}
           />
         </div>
+        <CtaBand />
       </div>
     </div>
   );

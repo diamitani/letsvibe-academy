@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/supabase/server";
 import {
@@ -8,6 +8,8 @@ import {
   LabChecklist,
   MarkCompleteButton,
 } from "./course-actions";
+import { LabRunner } from "@/components/labs/LabRunner";
+import { Markdown } from "@/components/markdown/Markdown";
 
 export const dynamic = "force-dynamic";
 
@@ -60,7 +62,7 @@ export default async function CoursePage({
       chapters: {
         where: { isPublished: true },
         orderBy: { position: "asc" },
-        include: { lessons: { orderBy: { position: "asc" } } },
+        include: { lessons: { orderBy: { position: "asc" }, include: { labConfig: true } } },
       },
     },
   });
@@ -235,7 +237,7 @@ export default async function CoursePage({
             {!selectedLesson ? (
               <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
                 <p className="text-sm text-slate-500">
-                  No lessons published yet — check back soon.
+                  No lessons published yet. Check back soon.
                 </p>
               </div>
             ) : (
@@ -291,23 +293,39 @@ export default async function CoursePage({
                           <h3 className="text-sm font-bold uppercase tracking-wide text-slate-500">
                             Instructions
                           </h3>
-                          <div className="mt-2 whitespace-pre-line text-slate-700">
+                          <Markdown className="mt-2">
                             {selectedLesson.bodyMd}
-                          </div>
+                          </Markdown>
                         </>
                       )}
+                      {selectedLesson.labConfig ? (
+                        <div className="mt-6">
+                          <LabRunner
+                            lessonId={selectedLesson.id}
+                            lessonTitle={selectedLesson.title}
+                            runtime={selectedLesson.labConfig.runtime}
+                            starterCode={(() => {
+                              try {
+                                const files = JSON.parse(selectedLesson.labConfig.template);
+                                const first = Array.isArray(files) ? files[0] : files;
+                                return typeof first === "string" ? first : first?.content ?? "";
+                              } catch {
+                                return "";
+                              }
+                            })()}
+                          />
+                        </div>
+                      ) : null}
                       <LabChecklist bodyMd={selectedLesson.bodyMd} />
                     </>
                   ) : (
                     selectedLesson.bodyMd && (
-                      <div className="whitespace-pre-line text-slate-700">
-                        {selectedLesson.bodyMd}
-                      </div>
+                      <Markdown>{selectedLesson.bodyMd}</Markdown>
                     )
                   )}
                   {selectedLesson.kind === "quiz" && (
                     <p className="mt-2 text-sm text-slate-500">
-                      Interactive quizzes are coming soon — mark this lesson complete
+                      Interactive quizzes are coming soon. Mark this lesson complete
                       once you&apos;ve reviewed the material.
                     </p>
                   )}

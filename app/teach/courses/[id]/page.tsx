@@ -13,7 +13,7 @@ import ChapterManager from "./_components/chapter-manager";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Edit course — LetsVibeAI Academy" };
+export const metadata = { title: "Edit course — LVAI Academy" };
 
 export default async function TeachCourseEditorPage({
   params,

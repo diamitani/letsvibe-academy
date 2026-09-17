@@ -86,6 +86,7 @@ model Lesson {
 
   chapter  Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   progress Progress[]
+  labConfig LabConfig?
 
   @@index([chapterId, position])
 }
@@ -228,11 +229,42 @@ model Subscriber {
 
 model NewsletterIssue {
   id           String      @id @default(cuid())
+  slug         String?     @unique
   subject      String
   bodyMd       String      @db.Text
+  videoUrl     String?
+  audioUrl     String?
   status       IssueStatus @default(draft)
   scheduledFor DateTime?   @db.Timestamptz(6)
   sentAt       DateTime?   @db.Timestamptz(6)
   createdAt    DateTime    @default(now()) @db.Timestamptz(6)
   updatedAt    DateTime    @updatedAt @db.Timestamptz(6)
+}
+
+model MarketplaceListing {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String   @db.Text
+  category    String
+  installMd   String?  @db.Text
+  sourceUrl   String?
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+
+  @@index([category])
+}
+
+model LabConfig {
+  id         String @id @default(cuid())
+  lessonId   String @unique
+  runtime    String // 'node' | 'python'
+  template   String @db.Text // starter files as JSON
+  runCommand String
+  tests      String? @db.Text // test assertions as JSON
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime @updatedAt @db.Timestamptz(6)
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 }

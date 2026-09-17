@@ -12,7 +12,7 @@ import PublishToggle from "./_components/publish-toggle";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Teach — LetsVibeAI Academy" };
+export const metadata = { title: "Teach — LVAI Academy" };
 
 export default async function TeachDashboardPage() {
   const me = await requireSessionUser();

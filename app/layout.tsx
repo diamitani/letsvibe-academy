@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LetsVibeAI Academy — Learn to Build with AI",
+  title: "LVAI Academy — Learn to Build with AI",
   description:
     "Learn to build with AI: guided courses, curated video tracks, hands-on labs, a deep library, and the best AI tools — all in one place.",
 };

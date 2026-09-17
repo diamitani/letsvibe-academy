@@ -99,7 +99,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-slate-500">
-          New to LetsVibeAI Academy?{" "}
+          New to LVAI Academy?{" "}
           <Link href="/signup" className="font-semibold text-[#0B2545] hover:underline">
             Create an account
           </Link>
